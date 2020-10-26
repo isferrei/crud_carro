@@ -49,9 +49,21 @@ app.get("/usuario", (req, resp) => {
     });
 });
 
+app.post("/usuario", (req, resp) => {
+    Usuario.create(req.body).then( o => {
+        resp.send(o.dataValues);
+    });
+});
+
 app.get("/cliente", (req, resp) => {
     Cliente.findAll().then(function(clientes){
         resp.send(clientes);
+    });
+});
+
+app.post("/cliente", (req, resp) => {
+    Cliente.create(req.body).then( o => {
+        resp.send(o.dataValues);
     });
 });
 

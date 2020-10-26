@@ -4,10 +4,12 @@
       <vs-card>
         <h3 class="card-title d-flex">
           Relação de Clientes
-          <vs-button border class="ml-auto btn-cadastrar"  to="/cadastrarClientes" color="#5444ce" name="cadastrar">
+          <vs-button border class="ml-auto btn-cadastrar"  @click="cadastrar()"  color="#5444ce" name="cadastrar">
            + Cadastrar
           </vs-button>
-          
+          <vs-popup :active.sync="cadastrarClientes" title="">
+            <cadastrar-clientes></cadastrar-clientes>
+          </vs-popup>
         </h3>
 
         <vs-list>
@@ -34,18 +36,24 @@
 
 <script>
 import Cliente from '../../../../services/clientes';
+import cadastrarClientes from '@/views/components/paginas/clientes/cadastrarClientes';
 
 export default {
-  name: "veiculos",
+  name: "clientes",
   data: () => ({
-    title: "veiculos",
+    title: "clientes",
     defaultlist: false,
     headerlist: false,
     iconlist: false,
     contentlist: false,
     avatarlist: false,
-    pessoas: []
+    pessoas: [],
+    cadastrarClientes: false,
   }),
+  
+  components: {
+    cadastrarClientes,
+  },
 
   mounted(){
     Cliente.listar().then(resposta => {
@@ -53,6 +61,27 @@ export default {
       console.log(this.pessoas)
     })
   },
+
+  methods: {
+    cadastrar(){
+      return this.cadastrarClientes = true;
+    },
+
+    editar(clientes){
+      return this.cadastrarClientes = true;
+    },
+
+    remover(cliente){
+      if(confirm('Deseja excluir o veículo?')){
+        Cliente.apagar(cliente).then(resposta => {
+          this.listar()
+          this.errors = {}
+        }).catch(e => {
+          this.errors = e.response.data.errors
+        })
+      }
+    }
+  }
 };
 </script>
 <style scoped>

@@ -2,27 +2,21 @@
   <vs-row vs-justify="center" style="overflow-x: hidden;">
     <vs-col type="flex" vs-justify="center" vs-align="center" vs-lg="12" vs-xs="12">
         <h3 class="card-title d-flex">
-         Cadastrar veículo
+         Cadastrar cliente
         </h3>
         <br>
-        <h5>Preencha as informações abaixo para cadastrar um veículo:</h5>
+        <h5>Preencha as informações abaixo para cadastrar um cliente:</h5>
         <br>
         <hr/>
         <form @submit.prevent="salvar()" style="overflow-y: scroll; height: 300px;">
         <table style="display: flex; flex-direction: column; align-items: center;">
           <tr>
-            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca" :value="veiculo.marca"/></td>
-            <td><vs-input label-placeholder="Modelo" color="dark" class="inputx" name="modelo" v-model="carro.modelo" :value="veiculo.modelo"/></td>
-            <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab" :value="veiculo.anoFab"/></td>
+            <td><vs-input label-placeholder="Nome" color="dark" class="inputx" name="nome" v-model="cliente.nome"/></td>
+            <td><vs-input label-placeholder="Email" color="dark" class="inputx" name="email" v-model="cliente.email"/></td>
           </tr> 
           <tr>
-            <td><vs-input label-placeholder="Placa" color="dark" class="inputx" name="placa" v-model="carro.placa" :value="veiculo.placa"/></td>
-            <td><vs-input label-placeholder="Kilometragem" color="dark" class="inputx" name="km" v-model="carro.km" :value="veiculo.km"/></td>
-            <td><vs-input label-placeholder="Status" color="dark" class="inputx" name="status" v-model="carro.status" :value="veiculo.status"/></td>
-          </tr>
-          <tr>
-            <td float="left"><vs-input label-placeholder="Categoria" color="dark" class="inputx" name="categoria" v-model="carro.categoria"/></td>
-            <td><vs-upload action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload"  text="Carregar imagem" v-model="carro.img" /></td>
+            <td><vs-input label-placeholder="Idade" color="dark" class="inputx" name="idade" v-model="cliente.idade"/></td>
+            <td><vs-input label-placeholder="RG" color="dark" class="inputx" name="rg" v-model="cliente.rg"/></td>
           </tr>
           <br>
           <tr style="width: 67%;"><input type="submit" @click="$vs.notify({title:'Salvo com sucesso!',color:'success',position:'top-center'})" class="btn-cadastrar" value="Salvar"></tr>
@@ -32,30 +26,26 @@
 </template>
 
 <script>
-import Carro from '../../../../services/carros';
+import Cliente from '../../../../services/clientes';
 
 export default {
-  name: "cadastrarVeiculo",
+  name: "cadastrarCliente",
   data: () => ({
-    marca:'',
-    modelo:'',
-    placa:'',
-    categoria:'',
-    status:'',
-    carro:{
-      marca: '',
-      modelo: '',
-      anoFab: '',
-      placa: '',
-      km: '',
-      status: '',
-      categoria: '',
-      img: ''
+    nome:'',
+    email:'',
+    idade:'',
+    rg:'',
+    cliente:{
+      nome: '',
+      email: '',
+      idade: '',
+      rg: '',
     },
-    veiculos: [],
-    title: "Cadastrar veiculo",
+    clientes: [],
+    errors: [],
+    title: "Cadastrar cliente",
   }),
-  props: ["veiculo"],
+  props: ["pessoas"],
 
   methods: {
      successUpload(){
@@ -63,9 +53,9 @@ export default {
     },
     salvar(){
 
-    if(!this.carro.id){
-      Carro.salvar(this.carro).then(resposta =>{
-        this.carro = {}
+    if(!this.cliente.id){
+      Cliente.salvar(this.cliente).then(resposta =>{
+        this.cliente = {}
           alert('Cadastrado com sucesso!')
           this.listar()
           this.errors = {}
@@ -73,8 +63,8 @@ export default {
           this.errors = e.response.data.errors
       })
     }else{
-      Carro.atualizar(this.carro).then(resposta =>{
-        this.carro = {}
+      Cliente.atualizar(this.cliente).then(resposta =>{
+        this.cliente = {}
           alert('Atualizado com sucesso!')
           this.listar()
         }).catch(e => {
@@ -83,8 +73,8 @@ export default {
       }
     },
 
-    editar(carro){
-      this.carro = carro
+    editar(cliente){
+      this.cliente = cliente
     },
 
   }

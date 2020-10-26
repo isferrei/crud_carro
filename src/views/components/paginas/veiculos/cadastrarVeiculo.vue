@@ -11,9 +11,9 @@
         <form @submit.prevent="salvar()" style="overflow-y: scroll; height: 300px;">
         <table style="display: flex; flex-direction: column; align-items: center;">
           <tr>
-            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca" :value="veiculo.marca"/></td>
-            <td><vs-input label-placeholder="Modelo" color="dark" class="inputx" name="modelo" v-model="carro.modelo" :value="veiculo.modelo"/></td>
-            <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab" :value="veiculo.anoFab"/></td>
+            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca"/>{{carro.marca}}</td>
+            <td><vs-input label-placeholder="Modelo" color="dark" class="inputx" name="modelo" v-model="carro.modelo"/>{{carro.modelo}}</td>
+            <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab"/>{{carro.anoFab}}</td>
           </tr> 
           <tr>
             <td><vs-input label-placeholder="Placa" color="dark" class="inputx" name="placa" v-model="carro.placa" :value="veiculo.placa"/></td>

@@ -6,6 +6,7 @@ Vue.use(Router)
 export default new Router({
 	routes: [
     {
+        
     // ======================
     // Full Layout
     // ======================
@@ -32,12 +33,6 @@ export default new Router({
                     component: () => import('./views/components/paginas/locacoes/locacoes.vue')
                 },
                 {
-                    path: '/login',
-                    name: 'login',
-                    index: 3,
-                    component: () => import('./login.vue')
-                },
-                {
                     path: '/veiculos',
                     name: 'Veiculos',
                     index: 13,
@@ -56,16 +51,20 @@ export default new Router({
             redirect: '/dashboard'
         },
         {
-            path: '/login',
-            component: () => import('./login.vue'),
-        },
-        {
             path: '/cadastrarVeiculo',
             component: () => import('./views/components/paginas/veiculos/cadastrarVeiculo.vue'),
+        },
+        {
+            path: '/cadastrarCliente',
+            component: () => import('./views/components/paginas/clientes/cadastrarClientes.vue'),
+        },
+        {
+            path: '/cadastrarUsuario',
+            component: () => import('./views/components/paginas/usuarios/cadastrarUsuarios.vue'),
+        },
+        {
+            path: '/login',
+            component: () => import('./layout/full/header/login.vue'),
         }
-        // {
-        //     path: '/cadastrarClientes',
-        //     component: () => import('./views/components/paginas/clientes/cadastrarClientes.vue'),
-        // }
 	]
 })

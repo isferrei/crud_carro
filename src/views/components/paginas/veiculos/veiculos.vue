@@ -28,7 +28,7 @@
                 <vs-chip v-if="carro.status=='Disponivel'" color="success" class="status" :value="carro.status">{{carro.status}}</vs-chip>
                 <vs-chip v-else color="danger" class="status" :value="carro.status">{{carro.status}}</vs-chip>
               </td>
-              <td><button @click="editar(carro.id)"><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
+              <td><button @click="editar(carro)"><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
               <td><button @click="remover(carro)"><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
             </tr>
             </table>
@@ -73,7 +73,6 @@ export default {
 
   mounted(){
     Carro.listar().then(resposta => {
-      // console.log(resposta.data)
       this.veiculos = resposta.data
       console.log(this.veiculos)
     })
