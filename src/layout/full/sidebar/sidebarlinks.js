@@ -18,12 +18,12 @@
 		url:"/clientes",
 		name:"Clientes",
 		icon:"group"
-	},
-	{
-		url: "/login",
-		name: "Login",
-		icon:"login"
-	},
+	}
+	// {
+	// 	url: "/login",
+	// 	name: "Login",
+	// 	icon:"login"
+	// },
 	// {
 	// 	url: "/alert",
 	// 	name: "Alert",

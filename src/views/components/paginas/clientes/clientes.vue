@@ -1,67 +1,72 @@
 <template>
   <vs-row vs-justify="center">
     <vs-col type="flex" vs-justify="center" vs-align="center" vs-lg="12" vs-xs="12">
-      <!--
-        /////////////////
-        Default Inputs
-        /////////////////
-      -->
       <vs-card>
         <h3 class="card-title d-flex">
-          Default Inputs
-        </h3>
-        <h3 class="card-title d-flex">
-          Input Label
-          <vs-button class="ml-auto p-0" @click="inputlabel=true" type="line">
-            <vs-icon icon="code"></vs-icon>
+          Relação de Clientes
+          <vs-button border class="ml-auto btn-cadastrar"  to="/cadastrarClientes" color="#5444ce" name="cadastrar">
+           + Cadastrar
           </vs-button>
+          
         </h3>
-        <p class="card-subtitle">
-          Add a label to the input with the property
-          <code>label</code>.
-        </p>
+
+        <vs-list>
+          <vs-list-header title="Clientes" color="#5444ce"></vs-list-header>
+          <vs-list-item>
+            <table>
+            <tr v-for="cliente of pessoas" :key="cliente.id"><td>
+              <vs-avatar size="40px" color="danger" />
+              </td>
+              <td><p>{{cliente.nome}}</p></td>
+              <td><p>{{cliente.email}}</p></td>
+              <td><p>{{cliente.idade}}</p></td>
+              <td><p>{{cliente.rg}}</p></td>
+              <td><button><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
+              <td><button><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
+            </tr>
+            </table>
+          </vs-list-item>
+        </vs-list>
       </vs-card>
     </vs-col>
   </vs-row>
 </template>
 
 <script>
+import Cliente from '../../../../services/clientes';
+
 export default {
-  name: "input",
+  name: "veiculos",
   data: () => ({
-    title: "Input",
-    defaulinputs: false,
-    value1: "",
-    value2: "",
-    inputlabel: false,
-    fname: "",
-    password: "",
-    inputlabelplace: false,
-    lp1: "",
-    lp2: "",
-    inputicon: false,
-    inputicon1: "",
-    inputicon2: "",
-    inputicon3: "",
-    inputicon4: "",
-    inputicon5: "",
-    inputicon6: "",
-    inputicon7: "",
-    inputcolor: false,
-    colorinput1: "",
-    colorinput2: "",
-    colorinput3: "",
-    colorinput4: "",
-    colorinput5: "",
-    colorinput6: "",
-    colorinput7: "",
-    inputvalidation: false,
-    inputsize: false,
-    inputsize1: "",
-    inputsize2: "",
-    inputsize3: ""
-  })
+    title: "veiculos",
+    defaultlist: false,
+    headerlist: false,
+    iconlist: false,
+    contentlist: false,
+    avatarlist: false,
+    pessoas: []
+  }),
+
+  mounted(){
+    Cliente.listar().then(resposta => {
+      this.pessoas = resposta.data
+      console.log(this.pessoas)
+    })
+  },
 };
 </script>
-
-
+<style scoped>
+.miniature-list{
+  width: 150px;
+  max-height: 150px;
+  margin: 10px;
+}
+table tr td{
+  padding: 0px 30px 0px 30px;
+  vertical-align: middle;
+}
+button{
+  background-color:transparent;
+  border: none;
+}
+</style>

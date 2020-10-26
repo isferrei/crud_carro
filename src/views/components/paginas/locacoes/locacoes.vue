@@ -6,28 +6,19 @@
           Locações
         </h3>
         <vs-list>
-          <vs-list-header title="Veículos" color="#5444ce"></vs-list-header>
-          <vs-list-item title="Ford KA" subtitle="Classe econômica">
+          <vs-list-header title="" color="#5444ce"></vs-list-header>
             <table>
-            <tr><td>
+            <tr v-for="locacao of itens" :key="locacao.id"><td>
               <img src="@/assets/images/veiculos/ford.png" class="miniature-list"/>
               </td>
-              <td><p>kwn-3124</p></td>
-              <td><vs-chip color="danger">alugado</vs-chip></td>
-              <td><p>11/11/2020</p></td>
-              <td><p>11/11/2020</p></td>
+              <td><p>{{locacao.usuarioId}}</p></td>
+              <td><p>{{locacao.carroId}}</p></td>
+              <td><p>{{locacao.valor}}</p></td>
+              <td><p>{{locacao.createdAt}}</p></td>
               <td><button><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
               <td><button><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
             </tr>
             </table>
-          </vs-list-item>
-          <vs-list-item title="Acura" subtitle="Classe SUV">
-            <tr><td>
-              <img src="@/assets/images/veiculos/acura.png" class="miniature-list"/>
-            </td>
-            <td><p>kwn-3124</p></td>
-            </tr>
-          </vs-list-item>
         </vs-list>
       </vs-card>
     </vs-col>
@@ -35,6 +26,8 @@
 </template>
 
 <script>
+import Locacao from '../../../../services/locacaos';
+
 export default {
   name: "Locações",
   data: () => ({
@@ -43,8 +36,18 @@ export default {
     headerlist: false,
     iconlist: false,
     contentlist: false,
-    avatarlist: false
-  })
+    avatarlist: false,
+    itens: []
+  }),
+
+   mounted(){
+    Locacao.listar().then(resposta => {
+      console.log(resposta.data)
+      this.itens = resposta.data
+      console.log(this.itens)
+    })
+  },
+
 };
 </script>
 <style scoped>
