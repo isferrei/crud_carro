@@ -15,8 +15,6 @@
               <td><p>{{locacao.carroId}}</p></td>
               <td><p>{{locacao.valor}}</p></td>
               <td><p>{{locacao.createdAt}}</p></td>
-              <td><button><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
-              <td><button><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
             </tr>
             </table>
         </vs-list>

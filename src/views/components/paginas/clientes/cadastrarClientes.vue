@@ -78,7 +78,7 @@ table tr td{
 button{
   border: none;
 }
-.btn-cadastrar{
+.btn-cadastrar-item{
   border: none;
   border-radius: 7px;
   height: 40px;

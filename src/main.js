@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuesax from 'vuesax'
-
+import iView from 'iview'
+import VueTheMask from 'vue-the-mask'
 
 import App from './App.vue'
 
@@ -21,6 +22,9 @@ import router from './router'
 Vue.config.productionTip = false
 Vue.config.devtools = true
 Vue.use(Vuesax)
+Vue.use(iView)
+Vue.use(VueTheMask)
+
 
 new Vue({
   store,

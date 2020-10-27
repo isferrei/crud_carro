@@ -17,7 +17,7 @@
             <td><vs-input type="password" label-placeholder="Senha" color="dark" class="inputx" v-model="usuario.senha"/></td>
           </tr>
           <tr>
-            <td><vs-input label-placeholder="CPF" color="dark" class="inputx" v-model="usuario.cpf"/></td>
+            <td><vs-input label-placeholder="CPF" color="dark" class="inputx" :mask="['###.###.###-##', '##.###.###/####-##']" v-model="usuario.cpf"/></td>
           </tr>
           <br>
           <br>
@@ -34,6 +34,7 @@
 
   <script>
 import Usuario from '../../../../services/usuarios';
+import {mask} from 'vue-the-mask';
 
 export default {
   name: "CadastrarUsuarios",
@@ -49,9 +50,13 @@ export default {
       email: '',
       senha: '',
       cpf: '',
-    errors: []
+    errors: [],
+    directives: {mask}
     },
     }
+  },
+
+  components: {
   },
 
   methods: {
