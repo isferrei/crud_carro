@@ -18,7 +18,7 @@ export default {
   },
 
   atualizar:(id, locacao)=>{
-    return axios.put('http://localhost:8000/Locacao'+id, Locacao);
+    return axios.put('http://localhost:8000/Locacao'+id, locacao);
     },
 
     apagar:(id, locacao)=>{

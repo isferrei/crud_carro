@@ -18,11 +18,10 @@ export default {
   },
 
   atualizar:(id, carro)=>{
-    return axios.put('http://localhost:8000/Carro'+id, Carro);
+    return axios.put('http://localhost:8000/Carro', carro);
     },
 
     apagar:(id, carro)=>{
 		return axios.delete('http://localhost:8000/Carro'+id, carro)
 	}
-
 }

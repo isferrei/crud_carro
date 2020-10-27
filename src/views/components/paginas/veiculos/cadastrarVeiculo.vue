@@ -8,10 +8,10 @@
         <h5>Preencha as informações abaixo para cadastrar um veículo:</h5>
         <br>
         <hr/>
-        <form @submit.prevent="salvar()" style="overflow-y: scroll; height: 300px;">
+        <form @submit.prevent="salvar" style="overflow-y: scroll; height: 300px;">
         <table style="display: flex; flex-direction: column; align-items: center;">
           <tr>
-            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca"/>{{carro.marca}}</td>
+            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca"/>{{veiculo.marca}}</td>
             <td><vs-input label-placeholder="Modelo" color="dark" class="inputx" name="modelo" v-model="carro.modelo"/>{{carro.modelo}}</td>
             <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab"/>{{carro.anoFab}}</td>
           </tr> 
@@ -50,7 +50,8 @@ export default {
       km: '',
       status: '',
       categoria: '',
-      img: ''
+      img: '',
+      errors: []
     },
     veiculos: [],
     title: "Cadastrar veiculo",
@@ -62,29 +63,16 @@ export default {
       this.$vs.notify({color:'success'})
     },
     salvar(){
-
-    if(!this.carro.id){
-      Carro.salvar(this.carro).then(resposta =>{
-        this.carro = {}
-          alert('Cadastrado com sucesso!')
-          this.listar()
-          this.errors = {}
-        }).catch(e => {
-          this.errors = e.response.data.errors
+      Carro.salvar(this.carro).then(resposta => {
       })
-    }else{
-      Carro.atualizar(this.carro).then(resposta =>{
-        this.carro = {}
-          alert('Atualizado com sucesso!')
-          this.listar()
-        }).catch(e => {
-          this.errors = e.response.data.errors
-        })
-      }
     },
 
-    editar(carro){
-      this.carro = carro
+    atualizar(){
+
+    },
+
+    editar(veiculo){
+      this.veiculo = veiculo
     },
 
   }
@@ -121,6 +109,7 @@ button{
 }
 </style>
 <style>
+
 .vs-notifications{
   z-index: 9999999999;}
 </style>

@@ -8,7 +8,7 @@
       Template logo
       --> 
       <div slot="title" class="themelogo">
-        <img :src="logo" v-if="logo" alt="Dashboard"/>
+        <img :src="logo" v-if="logo" alt="Dashboard" to="/dashboard" style="cursor: pointer"/>
         <span class="logo-text" v-if="title">{{ title }}</span>
       </div>
       <!---

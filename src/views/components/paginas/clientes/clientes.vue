@@ -49,6 +49,7 @@ export default {
     avatarlist: false,
     pessoas: [],
     cadastrarClientes: false,
+    errors: []
   }),
   
   components: {
@@ -67,20 +68,20 @@ export default {
       return this.cadastrarClientes = true;
     },
 
-    editar(clientes){
+    editar(cliente){
       return this.cadastrarClientes = true;
     },
 
-    remover(cliente){
-      if(confirm('Deseja excluir o veículo?')){
-        Cliente.apagar(cliente).then(resposta => {
-          this.listar()
-          this.errors = {}
-        }).catch(e => {
-          this.errors = e.response.data.errors
-        })
-      }
-    }
+    // remover(cliente){
+    //   if(confirm('Deseja excluir o veículo?')){
+    //     Cliente.apagar(cliente).then(resposta => {
+    //       this.listar()
+    //       this.errors = {}
+    //     }).catch(e => {
+    //       this.errors = e.response.data.errors
+    //     })
+    //   }
+    // }
   }
 };
 </script>

@@ -8,7 +8,7 @@
         <h5>Preencha as informações abaixo para cadastrar um cliente:</h5>
         <br>
         <hr/>
-        <form @submit.prevent="salvar()" style="overflow-y: scroll; height: 300px;">
+        <form @submit.prevent="salvar" style="overflow-y: scroll; height: 300px;">
         <table style="display: flex; flex-direction: column; align-items: center;">
           <tr>
             <td><vs-input label-placeholder="Nome" color="dark" class="inputx" name="nome" v-model="cliente.nome"/></td>
@@ -20,7 +20,8 @@
           </tr>
           <br>
           <tr style="width: 67%;"><input type="submit" @click="$vs.notify({title:'Salvo com sucesso!',color:'success',position:'top-center'})" class="btn-cadastrar" value="Salvar"></tr>
-        </table></form>
+        </table>
+        </form>
     </vs-col>
   </vs-row>
 </template>
@@ -29,7 +30,7 @@
 import Cliente from '../../../../services/clientes';
 
 export default {
-  name: "cadastrarCliente",
+  name: "cadastrarClientes",
   data: () => ({
     nome:'',
     email:'',
@@ -40,43 +41,20 @@ export default {
       email: '',
       idade: '',
       rg: '',
+      errors: []
     },
-    clientes: [],
-    errors: [],
     title: "Cadastrar cliente",
   }),
   props: ["pessoas"],
-
   methods: {
      successUpload(){
       this.$vs.notify({color:'success'})
     },
     salvar(){
-
-    if(!this.cliente.id){
-      Cliente.salvar(this.cliente).then(resposta =>{
-        this.cliente = {}
-          alert('Cadastrado com sucesso!')
-          this.listar()
-          this.errors = {}
-        }).catch(e => {
-          this.errors = e.response.data.errors
+      var self = this;
+      Cliente.salvar(this.cliente).then(resposta => {
       })
-    }else{
-      Cliente.atualizar(this.cliente).then(resposta =>{
-        this.cliente = {}
-          alert('Atualizado com sucesso!')
-          this.listar()
-        }).catch(e => {
-          this.errors = e.response.data.errors
-        })
-      }
     },
-
-    editar(cliente){
-      this.cliente = cliente
-    },
-
   }
   
 }

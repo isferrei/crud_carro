@@ -1,5 +1,4 @@
 <template>
- <vs-popup>
   <vs-row vs-justify="center">
     <vs-col type="flex" vs-justify="center" vs-align="center" vs-lg="12" vs-xs="12">
       <vs-card>
@@ -10,35 +9,74 @@
         <h5>Preencha as informações abaixo para realizar seu cadastro:</h5>
         <br>
         <hr/>
+        <form @submit.prevent="salvar()">
         <table>
           <tr>
-            <td><vs-input label-placeholder="Nome" color="dark" class="inputx" v-model="nome"/></td>
-            <td><vs-input label-placeholder="Email" color="dark" class="inputx" v-model="email"/></td>
-            <td><vs-input label-placeholder="Senha" color="dark" class="inputx" v-model="senha"/></td>
+            <td><vs-input label-placeholder="Nome" color="dark" class="inputx" v-model="usuario.nome"/></td>
+            <td><vs-input label-placeholder="Email" color="dark" class="inputx" v-model="usuario.email"/></td>
+            <td><vs-input type="password" label-placeholder="Senha" color="dark" class="inputx" v-model="usuario.senha"/></td>
+          </tr>
+          <tr>
+            <td><vs-input label-placeholder="CPF" color="dark" class="inputx" v-model="usuario.cpf"/></td>
           </tr>
           <br>
           <br>
           <tr>
             <td></td>
             <td></td>
-            <td><vs-button border color="#ffa726" style="float: right; font-size: 16px">Cadastrar</vs-button></td></tr>
+            <td><input type="submit" @click="$vs.notify({title:'Salvo com sucesso!',color:'success',position:'top-center'})" class="btn-cadastrar" value="Salvar"></td></tr>
         </table>
+        </form>
       </vs-card>
     </vs-col>
   </vs-row>
-</vs-popup>
 </template>
 
-<script>
+  <script>
+import Usuario from '../../../../services/usuarios';
 
 export default {
-  name: "Cadastrar veiculo",
-  data: () => ({
-    title: "Cadastrar veiculo"
-  }),
+  name: "CadastrarUsuarios",
+  data() {
+    return{
+    title: "Cadastrar usuario",
+    nome: '',
+    email: '',
+    senha: '',
+    cpf: '',
+    usuario:{
+      nome: '',
+      email: '',
+      senha: '',
+      cpf: '',
+    errors: []
+    },
+    }
+  },
+
+  methods: {
+  successUpload(){
+    this.$vs.notify({color:'success'})
+  },
+  salvar(){
+      Usuario.salvar(this.usuario).then(resposta => {
+      })
+    },
+  }
+
+
 };
 </script>
 <style scoped>
+.btn-cadastrar{
+  border: none;
+  border-radius: 7px;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  background-color: #ffa726;
+}
 .miniature-list{
   width: 150px;
   max-height: 150px;

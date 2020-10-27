@@ -10,6 +10,7 @@
        <td>
        <div class="card-login">
           <div class="logo"><img src="@/assets/images/logo/logo-icon.png"></div>
+        <form @submit.prevent="login()">
           <vs-input border label-placeholder="Email" color="dark" class="inputx" v-model="fname"/>
           <vs-input border
             type="password"
@@ -18,8 +19,9 @@
             label-placeholder="Senha"
             v-model="password"
           /><br><br>
-          <vs-button large style="width: 200px; color: #000; font-weight: 700" color="#fff0b3" to="/cadastrarUsuario.vue">ENTRAR</vs-button>
-          <vs-button class="cadastrar" to="/cadastrarUsuario.vue">Ainda não sou cadastrado</vs-button>
+          </form>
+          <vs-button large class="login" color="#fff0b3" @click="login">ENTRAR</vs-button>
+          <vs-button class="cadastrar" to="/cadastrarUsuario">Ainda não sou cadastrado</vs-button>
         </div>
         </td>
       </tr>
@@ -35,12 +37,18 @@ export default {
     password: "",
     fname: ""
   }),
+  methods: {
+    login(){
+      this.$router.replace("dashboard");
+    }
+  }
 };
+
+
 </script>
 <style scoped>
 *{
   align-items: center;
-  
 }
 .cadastrar{
   margin-top: 10px;
@@ -60,9 +68,6 @@ export default {
 }
 .main-div{
   justify-content: center;
-}
-header .topnavbar{
-  display: none !important;
 }
 .card-img{
   display: flex;
@@ -94,6 +99,11 @@ header .topnavbar{
 .input{
   border-radius: 7px;
   color: #fff;
+}
+.login{
+  width: 200px; 
+  color: #000; 
+  font-weight: 700;
 }
 </style>
 

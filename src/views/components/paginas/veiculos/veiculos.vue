@@ -7,9 +7,6 @@
           <vs-button border class="ml-auto btn-cadastrar" @click="cadastrar()"  color="#5444ce" name="cadastrar">
            + Cadastrar
           </vs-button>
-          <vs-popup :active.sync="cadastrarVeiculo" title="">
-            <cadastrar-veiculo :veiculo="veiculos"></cadastrar-veiculo>
-          </vs-popup>
         </h3>
 
         <vs-list>
@@ -43,12 +40,43 @@
         </vs-list>
       </vs-card>
     </vs-col>
+      <vs-col v-show="cadastrarVeiculo" class="cadastro" vs-justify="center" vs-align="center" vs-lg="11" vs-xs="12">
+        <div>
+        <h3 class="card-title d-flex">
+          Cadastrar Veículo
+        </h3>
+        <vs-col type="flex" vs-justify="center" vs-align="center" vs-lg="12" vs-xs="12">
+        <br>
+        <h5>Preencha as informações abaixo para cadastrar um veículo:</h5>
+        <br>
+        <hr/>
+        <form @submit.prevent="salvar">
+        <table style="display: flex; flex-direction: column; align-items: center;">
+          <tr>
+            <td><vs-input label-placeholder="Marca" color="dark" class="inputx" name="marca" v-model="carro.marca"/></td>
+            <td><vs-input label-placeholder="Modelo" color="dark" class="inputx" name="modelo" v-model="carro.modelo"/></td>
+            <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab"/></td>
+          </tr> 
+          <tr>
+            <td><vs-input label-placeholder="Placa" color="dark" class="inputx" name="placa" v-model="carro.placa"/></td>
+            <td><vs-input label-placeholder="Kilometragem" color="dark" class="inputx" name="km" v-model="carro.km"/></td>
+            <td><vs-input label-placeholder="Status" color="dark" class="inputx" name="status" v-model="carro.status"/></td>
+          </tr>
+          <tr>
+            <td float="left"><vs-input label-placeholder="Categoria" color="dark" class="inputx" name="categoria" v-model="carro.categoria"/></td>
+            <td><vs-upload action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload"  text="Carregar imagem" v-model="carro.img" /></td>
+          </tr>
+          <br>
+          <tr style="width: 67%;"><input type="submit" @click="$vs.notify({title:'Salvo com sucesso!',color:'success',position:'top-center'})" class="btn-cadastrar-item" value="Salvar"></tr>
+        </table></form>
+        </vs-col>
+        </div>
+      </vs-col>
   </vs-row>
 </template>
 
 <script>
 import Carro from '../../../../services/carros';
-import cadastrarVeiculo from '@/views/components/paginas/veiculos/cadastrarVeiculo';
 
 export default {
   name: "list",
@@ -63,12 +91,24 @@ export default {
     statusColor: "danger",
     veiculos: [],
     cadastrarVeiculo: false,
-    errors: []
+    marca:'',
+    modelo:'',
+    placa:'',
+    categoria:'',
+    status:'',
+    carro:{
+      marca: '',
+      modelo: '',
+      anoFab: '',
+      placa: '',
+      km: '',
+      status: '',
+      categoria: '',
+      img: '',
+      errors: [],
+    },
+    title: "Cadastrar veiculo",
     }
-  },
-
-  components: {
-    cadastrarVeiculo,
   },
 
   mounted(){
@@ -82,13 +122,39 @@ export default {
     
   },
   methods: {
-    cadastrar(){
-      return this.cadastrarVeiculo = true;
+     successUpload(){
+      this.$vs.notify({color:'success'})
     },
 
-    editar(veiculos){
-      return this.cadastrarVeiculo = true;
-      // this.carro = carro
+    listar(){
+      Carro.listar().then(resposta => {
+        this.veiculos = resposta.data
+      })
+    },
+
+    salvar(){
+      Carro.salvar(this.carro).then(resposta => {
+      })
+    },
+
+    atualizar(){
+       this.carro = {}
+    },
+
+    editar(veiculo){
+      this.veiculo = veiculo
+    },
+    cadastrar(){
+      if(this.cadastrarVeiculo == true){
+        this.cadastrarVeiculo = false;
+      }else{
+        this.cadastrarVeiculo = true;
+      }
+    },
+
+    editar(carro){
+      this.carro = carro
+      this.cadastrarVeiculo = true;
     },
 
     remover(carro){
@@ -119,10 +185,44 @@ button{
   background-color:transparent;
   border: none;
 }
+.con-input-upload {
+  height: 87px !important;
+}
+td{
+  width: auto;
+}
+.miniature-list{
+  width: 150px;
+  max-height: 150px;
+  margin: 10px;
+}
+table tr td{
+  padding: 0px 10px 0px 10px;
+  vertical-align: middle;
+}
+button{
+  border: none;
+}
+.btn-cadastrar-item{
+  border: none;
+  border-radius: 7px;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  background-color: #ffa726;
+}
 </style>
 <style>
   .con-vs-popup .vs-popup {
     width: 50%;
     height: 500px;
     }
+  .cadastro{
+    background-color: #fff;
+    padding: 20px !important;
+    box-shadow: 0 4px 25px 0 rgba(0,0,0,.1);
+    transition: all .3s ease;
+    border-radius: 8px;
+  }
 </style>

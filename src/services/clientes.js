@@ -10,7 +10,7 @@ export default {
   },
 
   salvar:(cliente) => {
-    return axios.post('http://localhost:8000/Cliente')
+    return axios.post('http://localhost:8000/Cliente', cliente)
     .catch(error => {
         this.errorMessage = error.message;
         console.error("There was an error!", error);
