@@ -21,8 +21,12 @@ export default {
     return axios.put('http://localhost:8000/Locacao'+id, locacao);
     },
 
-    apagar:(id, locacao)=>{
-		return axios.delete('http://localhost:8000/Locacao'+id, locacao)
-	}
+    apagar:(id)=>{
+      return axios.delete('http://localhost:8000/Locacao/'+id)
+      .catch(error => {
+        this.errorMessage = error.message;
+        console.error("There was an error!", error);
+      });
+    }
 
 }

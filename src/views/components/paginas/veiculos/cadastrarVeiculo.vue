@@ -16,9 +16,9 @@
             <td><vs-input label-placeholder="Ano" color="dark" class="inputx" name="ano" v-model="carro.anoFab"/>{{carro.anoFab}}</td>
           </tr> 
           <tr>
-            <td><vs-input label-placeholder="Placa" color="dark" class="inputx" name="placa" v-model="carro.placa" :value="veiculo.placa"/></td>
-            <td><vs-input label-placeholder="Kilometragem" color="dark" class="inputx" name="km" v-model="carro.km" :value="veiculo.km"/></td>
-            <td><vs-input label-placeholder="Status" color="dark" class="inputx" name="status" v-model="carro.status" :value="veiculo.status"/></td>
+            <td><vs-input label-placeholder="Placa" color="dark" class="inputx" name="placa" v-model="carro.placa"/></td>
+            <td><vs-input label-placeholder="Kilometragem" color="dark" class="inputx" name="km" v-model="carro.km"/></td>
+            <td><vs-input label-placeholder="Status" color="dark" class="inputx" name="status" v-model="carro.status"/></td>
           </tr>
           <tr>
             <td float="left"><vs-input label-placeholder="Categoria" color="dark" class="inputx" name="categoria" v-model="carro.categoria"/></td>

@@ -38,9 +38,10 @@ app.put("/carro/:id", (req, resp) => {
 });
 
 app.delete("/carro/:id", (req, resp) => {
-    Carro.findByPk(req.params.id).then( o => {
-        o.delete(req.body).then( (o2) => resp.send(o2.dataValues));
-    })
+    const carro_id = req.params.id;
+    Carro.destroy({where: {id: carro_id}}).then(function(carro){
+        resp.send(req.params.id);
+    });
 });
     
 app.get("/usuario", (req, resp) => {
@@ -55,6 +56,13 @@ app.post("/usuario", (req, resp) => {
     });
 });
 
+app.delete("/usuario/:id", (req, resp) => {
+    const usuario_id = req.params.id;
+    Usuario.destroy({where: {id: usuario_id}}).then(function(usuario){
+        resp.send(req.params.id);
+    });
+});
+
 app.get("/cliente", (req, resp) => {
     Cliente.findAll().then(function(clientes){
         resp.send(clientes);
@@ -64,6 +72,13 @@ app.get("/cliente", (req, resp) => {
 app.post("/cliente", (req, resp) => {
     Cliente.create(req.body).then( o => {
         resp.send(o.dataValues);
+    });
+});
+
+app.delete("/cliente/:id", (req, resp) => {
+    const cliente_id = req.params.id;
+    Cliente.destroy({where: {id: cliente_id}}).then(function(cliente){
+        resp.send(req.params.id);
     });
 });
 
@@ -82,6 +97,14 @@ app.put("/locacao/:id", (req, resp) => {
         o.update(req.body).then( (o2) => resp.send(o2.dataValues));
     })
 })
+
+app.delete("/locacao/:id", (req, resp) => {
+    const locacao_id = req.params.id;
+    Locacao.destroy({where: {id: locacao_id}}).then(function(locacao){
+        resp.send(req.params.id);
+    });
+});
+
 
 app.post("/locacao", (req, resp) => {
     Locacao.create(req.body, {include: [LocacaoItem]}).then( o => {

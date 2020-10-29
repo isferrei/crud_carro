@@ -24,16 +24,16 @@ export default {
       });
   },
 
-  atualizar:(id, carro)=>{
-    return axios.put('http://localhost:8000/Carro', carro)
+  atualizar:(id)=>{
+    return axios.put('http://localhost:8000/Carro/'+id)
     .catch(error => {
       this.errorMessage = error.message;
       console.error("There was an error!", error);
     });
     },
 
-    apagar:(carro)=>{
-    return axios.delete('http://localhost:8000/Carro', carro)
+    apagar:(id)=>{
+    return axios.delete('http://localhost:8000/Carro/'+id)
     .catch(error => {
       this.errorMessage = error.message;
       console.error("There was an error!", error);

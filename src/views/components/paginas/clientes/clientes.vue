@@ -21,7 +21,7 @@
               <td><p>{{cliente.idade}}</p></td>
               <td><p>{{cliente.rg}}</p></td>
               <td><button><vs-icon icon="edit" @click="editar(cliente)" size="small" color="#bdbdbd"></vs-icon></button></td>
-              <td><button><vs-icon icon="cancel" @click="remover(cliente)" size="small" color="#c30000"></vs-icon></button></td>
+              <td><button><vs-icon icon="cancel" @click="remover(cliente.id)" size="small" color="#c30000"></vs-icon></button></td>
             </tr>
             </table>
           </vs-list-item>
@@ -115,9 +115,9 @@ export default {
       })
     },
 
-    remover(cliente){
-      if(confirm('Deseja excluir o veículo?')){
-        Cliente.apagar(cliente).then(resposta => {
+    remover(id){
+      if(confirm('Deseja excluir o cliente?')){
+        Cliente.apagar(id).then(resposta => {
           this.listar()
           this.errors = {}
         }).catch(e => {

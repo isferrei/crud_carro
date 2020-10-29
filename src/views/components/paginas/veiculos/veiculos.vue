@@ -11,10 +11,9 @@
 
         <vs-list>
           <vs-list-header title="Veículos" color="#5444ce"></vs-list-header>
-          <vs-list-item title="Classe A" subtitle="Classe econômica">
             <table>
             <tr v-for="carro of veiculos" :key="carro.id"><td>
-              <img src="img" class="miniature-list"/>
+              <img :src="image" style="width: 70px; height:70px" class="miniature-list"/>
               </td>
               <td><p>{{carro.placa}}</p></td>
               <td><p>{{carro.marca}}</p></td>
@@ -22,11 +21,11 @@
               <td><p>{{carro.anoFab}}</p></td>
               <td><p>{{carro.km}}km</p></td>
               <td>
-                <vs-chip v-if="carro.status=='Disponivel'" color="success" class="status" :value="carro.status">{{carro.status}}</vs-chip>
-                <vs-chip v-else color="danger" class="status" :value="carro.status">{{carro.status}}</vs-chip>
+                <vs-chip v-if="carro.status=='Disponivel'" color="success" class="status" >{{carro.status}}</vs-chip>
+                <vs-chip v-else color="danger" class="status" >{{carro.status}}</vs-chip>
               </td>
-              <td><button @click="editar(carro)"><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
-              <td><button @click="remover(carro)"><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
+              <td><button @click="editar(carro.id, carro)"><vs-icon icon="edit" size="small" color="#bdbdbd"></vs-icon></button></td>
+              <td><button @click="remover(carro.id)"><vs-icon icon="cancel" size="small" color="#c30000"></vs-icon></button></td>
             </tr>
             </table>
           </vs-list-item>
@@ -64,8 +63,11 @@
           </tr>
           <tr>
             <td float="left">
-              <vs-input label-placeholder="Categoria" color="dark" class="inputx" name="categoria" v-model="carro.categoria"/></td>
-            <td><vs-upload action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload"  text="Carregar imagem" v-model="carro.img" /></td>
+            <vs-input label-placeholder="Categoria" color="dark" class="inputx" name="categoria" v-model="carro.categoria"/></td>
+            <td>
+                <label for="files" class="btn btn-cadastrar-item" style="margin-top: 20px; cursor: pointer">Carregar imagem</label>
+                <input type="file" id="files" action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload"  @change="onFileChange" style="display: none" value="Carregar imagem"/>
+            </td>
           </tr>
           <br>
           <tr style="width: 67%;"><input type="submit" @click="$vs.notify({title:'Salvo com sucesso!',color:'success',position:'top-center'})" class="btn-cadastrar-item" value="Salvar"></tr>
@@ -109,7 +111,9 @@ export default {
       categoria: '',
       img: '',
       errors: [],
+      carroId: '',
     },
+    image: '',
     title: "Cadastrar veiculo",
     }
   },
@@ -140,14 +144,21 @@ export default {
     },
 
     salvar(){
+    if(!this.carro.id){
       Carro.salvar(this.carro).then(resposta => {
       })
-    },
+    }else{
+      Carro.atualizar(this.carro.id).then(resposta => {
+        this.carro = {}
+        console.log(this.carro.id)
 
-    atualizar(){
-       this.carro = {}
+        this.errors = {}
+        alert('Atualizado com sucesso!')
+        this.listar()
+      })
+      }
     },
-
+    
     cadastrar(){
       if(this.cadastrarVeiculo == true){
         this.cadastrarVeiculo = false;
@@ -156,21 +167,39 @@ export default {
       }
     },
 
-    editar(carro){
+    editar(id, carro){
       this.carro = carro
+      this.carro.id = id
       this.cadastrarVeiculo = true;
     },
 
-    remover(carro){
+    remover(id){
       if(confirm('Deseja excluir o veículo?')){
-        Carro.apagar(carro).then(resposta => {
+        Carro.apagar(id).then(resposta => {
           this.listar()
           this.errors = {}
         }).catch(e => {
           this.errors = e.response.data.errors
         })
       }
-    }
+    },
+
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        this.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
   }
 
 };
